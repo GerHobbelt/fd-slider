@@ -13,7 +13,7 @@
         your own... http://www.modernizr.com/download/ 
         
         -->        
-        <script src="http://www.frequency-decoder.com/demo/fd-slider/js/modernizr-custom.js"></script>        
+        <script src="../js/modernizr-custom.js"></script>        
 <script>   
 // Set up the yepnope (Modernizr.load) directives... 
 Modernizr.load([
@@ -23,9 +23,9 @@ Modernizr.load([
     // If ranges are not supported, load the slider script and CSS file
     nope: [     
         // The slider CSS file
-        'http://www.frequency-decoder.com/demo/fd-slider/css/fd-slider.mhtml.min.css'       
+        '../css/fd-slider.css'       
         // The slider JS file
-        ,'http://www.frequency-decoder.com/demo/fd-slider/js/fd-slider.js'     
+        ,'../js/fd-slider.js'     
     ],
     callback: function(id, testResult) {
         // If the slider file has loaded then fire the onDomReady event        
