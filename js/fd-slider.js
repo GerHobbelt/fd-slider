@@ -1131,6 +1131,20 @@ var fdSlider = (function() {
             userInput = false;
         }
 
+        function onInputAttributesChange(e){                         
+            step = parseFloat(getAttribute(inp, "step"));
+            min = parseFloat(getAttribute(inp, "min"));
+            max = parseFloat(getAttribute(inp, "max")); 
+            
+            rMin = parseFloat(getAttribute(inp, "min"));
+            rMax = parseFloat(getAttribute(inp, "max")); 
+            
+            range = Math.abs(max - min);            
+            steps = Math.ceil( range / step);
+            
+            redraw();
+        }
+
         function onReset(e) {
             if(tagName == "input") {
                 inp.value = inp.defaultValue;
@@ -1163,6 +1177,12 @@ var fdSlider = (function() {
                 } catch(err){};
             } else {
                 addEvent(inp, 'change', onInputChange);
+            }
+
+            if("onpropertychange" in inp) {
+                inp.onpropertychange = onInputAttributesChange;
+            } else {
+                addEvent(inp, "DOMAttrModified", onInputAttributesChange);
             }
 
             // Add stepUp & stepDown methods to input element if using the html5Shim
@@ -1296,8 +1316,15 @@ var fdSlider = (function() {
         };
     }
 
-    addEvent(window, "load",   init);
-    addEvent(window, "load",   function() { setTimeout(function() { var slider; for(slider in sliders) { sliders[slider].checkValue(); } }, 0); });
+    addEvent(window, "load", init);
+    addEvent(window, "load", function() { 
+        setTimeout(function() { 
+            var slider; 
+            for(slider in sliders) { 
+                sliders[slider].checkValue(); 
+            } 
+        }, 0); 
+    });
     addEvent(window, "resize", resize);
     addEvent(window, "unload", unload);
 
