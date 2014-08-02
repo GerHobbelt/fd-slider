@@ -32,7 +32,8 @@ var fdSlider = (function() {
                     'return (' , str.replace(/<\!--.+-->/gim,'').replace(/\bfunction\b/g,'function-') , ');'].join(''));
                 return f();
             }
-        } catch (e) { }
+        } catch (e) { 
+        }
 
         return {"err":"Could not parse the JSON object"};
     };
@@ -141,7 +142,9 @@ var fdSlider = (function() {
     };
     // Javascript instantiation of a slider (input type="text|range" or select list)
     var createSlider = function(options) {
-        if(!options || !options.inp || !options.inp.tagName || options.inp.tagName.search(/^input|select/i) == -1) { return false; }
+        if(!options || !options.inp || !options.inp.tagName || options.inp.tagName.search(/^input|select/i) == -1) { 
+            return false; 
+        }
 
         options.html5Shim = options.html5Shim || false;
 
@@ -194,11 +197,11 @@ var fdSlider = (function() {
                 getAttribute(inp, "step") && getAttribute(inp, "step").search(/^(any|([0-9]+(\.[0-9]+){0,1}))$/i) != -1
                )) {
 
-                // Skip elements that have already been created are are resident in the DOM
-                if(inp.id && document.getElementById("fd-slider-"+inp.id)) {
+                // Skip elements that have already been created and are resident in the DOM
+                if(inp.id && document.getElementById("fd-slider-" + inp.id)) {
                     continue;
                 // Destroy elements that have already been created but not resident in the DOM
-                } else if(inp.id && !document.getElementById("fd-slider-"+inp.id)) {
+                } else if(inp.id && !document.getElementById("fd-slider-" + inp.id)) {
                     destroySingleSlider(inp.id);
                 }
 
@@ -238,9 +241,9 @@ var fdSlider = (function() {
     };
     var getInputAttributes = function(inp) {
         return {
-            "min":+(getAttribute(inp, "min") || 0),
-            "max":+(getAttribute(inp, "max") || 100),
-            "step":+(getAttribute(inp, "step").search(stepRegExp) != -1 ? inp.getAttribute("step") : 1)
+            min: +(getAttribute(inp, "min") || 0),
+            max: +(getAttribute(inp, "max") || 100),
+            step: +(getAttribute(inp, "step").search(stepRegExp) != -1 ? inp.getAttribute("step") : 1)
         };
     };
     var destroySingleSlider = function(id) {
@@ -516,7 +519,8 @@ var fdSlider = (function() {
                     try {
                         e = document.createEventObject();
                         inp.fireEvent('on' + type.toLowerCase(), e);
-                    } catch(err){ }
+                    } catch(err){ 
+                    }
                 }
             }
         }
@@ -1131,7 +1135,7 @@ var fdSlider = (function() {
             userInput = false;
         }
 
-        function onInputAttributesChange(e){                         
+        function onInputAttributesChange(e) {                         
             step = parseFloat(getAttribute(inp, "step"));
             min = parseFloat(getAttribute(inp, "min"));
             max = parseFloat(getAttribute(inp, "max")); 
@@ -1140,7 +1144,7 @@ var fdSlider = (function() {
             rMax = parseFloat(getAttribute(inp, "max")); 
             
             range = Math.abs(max - min);            
-            steps = Math.ceil( range / step);
+            steps = Math.ceil(range / step);
             
             redraw();
         }
@@ -1188,8 +1192,12 @@ var fdSlider = (function() {
             // Add stepUp & stepDown methods to input element if using the html5Shim
             if(html5Shim) {
                 inp.setAttribute("fd-range-enabled", 1);
-                inp.stepUp   = function(n) { increment(n||1); };
-                inp.stepDown = function(n) { increment(n||-1); };
+                inp.stepUp   = function(n) { 
+                    increment(n || 1); 
+                };
+                inp.stepDown = function(n) { 
+                    increment(n || -1); 
+                };
                 
                 if(useDOMAttrModEvt) {
                     addEvent(inp, typeof(inp.onpropertychange) == "object" ? "propertychange" : "DOMAttrModified", rescanAttrs);
@@ -1300,19 +1308,52 @@ var fdSlider = (function() {
         })();
 
         return {
-            onResize:       function(e) { if(outerWrapper.offsetHeight != sliderH || outerWrapper.offsetWidth != sliderW) { redraw(); } },
-            destroy:        function() { destroySlider(); },
-            reset:          function() { valueToPixels(tagName == "input" ? parseFloat(inp.value) : inp.selectedIndex); },
-            stepUp:         function(n) { increment(Math.abs(n)||1); },
-            stepDown:       function(n) { increment(-Math.abs(n)||-1); },
-            increment:      function(n) { increment(n); },
-            disable:        function() { disableSlider(); },
-            enable:         function() { enableSlider(); },
-            setRange:       function(mi, mx) { setSliderRange(mi, mx); },
-            getValueSet:    function() { return !!userSet; },
-            setValueSet:    function(tf) { valueSet(tf); },
-            rescan:         function() { rescanAttrs(); },
-            checkValue:     function() { if(varSetRules.onvalue) { userSet = true; checkValue(tagName == "input" ? parseFloat(inp.value) : inp.selectedIndex); } updateAriaValues(); redraw(); }
+            onResize:       function(e) { 
+                if(outerWrapper.offsetHeight != sliderH || outerWrapper.offsetWidth != sliderW) { 
+                    redraw(); 
+                } 
+            },
+            destroy:        function() { 
+                destroySlider(); 
+            },
+            reset:          function() { 
+                valueToPixels(tagName == "input" ? parseFloat(inp.value) : inp.selectedIndex); 
+            },
+            stepUp:         function(n) { 
+                increment(Math.abs(n) || 1); 
+            },
+            stepDown:       function(n) { 
+                increment(-Math.abs(n) || -1); 
+            },
+            increment:      function(n) { 
+                increment(n); 
+            },
+            disable:        function() { 
+                disableSlider(); 
+            },
+            enable:         function() { 
+                enableSlider(); 
+            },
+            setRange:       function(mi, mx) { 
+                setSliderRange(mi, mx); 
+            },
+            getValueSet:    function() { 
+                return !!userSet; 
+            },
+            setValueSet:    function(tf) { 
+                valueSet(tf); 
+            },
+            rescan:         function() { 
+                rescanAttrs(); 
+            },
+            checkValue:     function() { 
+                if(varSetRules.onvalue) { 
+                    userSet = true; 
+                    checkValue(tagName == "input" ? parseFloat(inp.value) : inp.selectedIndex); 
+                } 
+                updateAriaValues(); 
+                redraw(); 
+            }
         };
     }
 
@@ -1346,25 +1387,82 @@ var fdSlider = (function() {
 
     return {
         rescanDocument:         init,
-        createSlider:           function(opts) { return createSlider(opts); },
-        onDomReady:             function() { onDomReady(); },
-        destroyAll:             function() { destroyAllsliders(); },
-        destroySlider:          function(id) { return destroySingleSlider(id); },
-        redrawAll:              function() { resize(); },
+        createSlider:           function(opts) { 
+            return createSlider(opts); 
+        },
+        onDomReady:             function() { 
+            onDomReady(); 
+        },
+        destroyAll:             function() { 
+            destroyAllsliders(); 
+        },
+        destroySlider:          function(id) { 
+            return destroySingleSlider(id); 
+        },
+        redrawAll:              function() { 
+            resize(); 
+        },
         addEvent:               addEvent,
         removeEvent:            removeEvent,
         stopEvent:              stopEvent,
-        increment:              function(id, numSteps) { if(!sliderExists(id)) { return false; } sliders[id].increment(numSteps); },
-        stepUp:                 function(id, n) { if(!sliderExists(id)) { return false; } sliders[id].stepUp(Math.abs(n)||1); },
-        stepDown:               function(id, n) { if(!sliderExists(id)) { return false; } sliders[id].stepDown(-Math.abs(n)||-1); },
-        setRange:               function(id, newMin, newMax) { if(!sliderExists(id)) { return false; } sliders[id].setRange(newMin, newMax); },
-        updateSlider:           function(id) { if(!sliderExists(id)) { return false; } sliders[id].onResize(); sliders[id].reset(); },
-        disable:                function(id) { if(!sliderExists(id)) { return false; } sliders[id].disable(); },
-        enable:                 function(id) { if(!sliderExists(id)) { return false; } sliders[id].enable(); },
-        getValueSet:            function() { return getValueSet(); },
-        setValueSet:            function(a, tf) { if(!sliderExists(id)) { return false; } setValueSet(a, tf); },
-        setGlobalVariables:     function(json) { affectJSON(json); },
-        removeOnload:           function() { removeOnLoadEvent(); },
+        increment:              function(id, numSteps) { 
+            if(!sliderExists(id)) { 
+                return false; 
+            } 
+            sliders[id].increment(numSteps); 
+        },
+        stepUp:                 function(id, n) { 
+            if(!sliderExists(id)) { 
+                return false; 
+            } 
+            sliders[id].stepUp(Math.abs(n) || 1); 
+        },
+        stepDown:               function(id, n) { 
+            if(!sliderExists(id)) { 
+                return false; 
+            } 
+            sliders[id].stepDown(-Math.abs(n) || -1); 
+        },
+        setRange:               function(id, newMin, newMax) { 
+            if(!sliderExists(id)) { 
+                return false; 
+            } 
+            sliders[id].setRange(newMin, newMax); 
+        },
+        updateSlider:           function(id) { 
+            if(!sliderExists(id)) { 
+                return false; 
+            } 
+            sliders[id].onResize(); 
+            sliders[id].reset(); 
+        },
+        disable:                function(id) { 
+            if(!sliderExists(id)) { 
+                return false; 
+            } 
+            sliders[id].disable(); 
+        },
+        enable:                 function(id) { 
+            if(!sliderExists(id)) { 
+                return false; 
+            } 
+            sliders[id].enable(); 
+        },
+        getValueSet:            function() { 
+            return getValueSet(); 
+        },
+        setValueSet:            function(a, tf) { 
+            if(!sliderExists(id)) { 
+                return false; 
+            } 
+            setValueSet(a, tf); 
+        },
+        setGlobalVariables:     function(json) { 
+            affectJSON(json); 
+        },
+        removeOnload:           function() { 
+            removeOnLoadEvent(); 
+        },
         rescanAttributes:       rescanAttributes
     };
 })();
