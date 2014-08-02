@@ -23,7 +23,7 @@ var fdSlider = (function() {
         }
         try {
             // Does a JSON (native or not) Object exist
-            if(typeof JSON === "object" && typeof(JSON.parse) === "function") {
+            if(typeof JSON === "object" && typeof JSON.parse === "function") {
                 return JSON.parse(str);
             // Genious code taken from: http://kentbrewster.com/badges/
             } else if(/mousewheelenabled|fullaria|describedby|norangebar|html5animation|varsetrules/.test(str.toLowerCase())) {
